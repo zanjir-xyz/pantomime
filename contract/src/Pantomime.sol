@@ -19,7 +19,6 @@ contract Pantomime is Ownable {
     uint256 public totalScores;
     mapping(uint256 => mapping(uint256 => bool)) public levelSolution;
     mapping(uint256 => uint256) public levelCorrects;
-    mapping(uint256 => bool) consumedNonces;
     mapping(address => bool) public isPlayerReleased;
 
     function end() external onlyOwner {
@@ -53,20 +52,17 @@ contract Pantomime is Ownable {
 
     function submit(
         uint256 _ansHash,
-        uint256 _ansNonce,
         uint256[2] calldata _pA,
         uint256[2][2] calldata _pB,
         uint256[2] calldata _pC
     ) external {
         require(!ended, "Game has ended!");
-        require(!consumedNonces[_ansNonce], "Signature already consumed!");
         require(isPlayer[msg.sender], "User has not signed up!");
         uint256 level = playerProgress[msg.sender];
         require(levelSolution[level][_ansHash], "Incorrect answer!");
         require(
-            verifier.verifyProof(_pA, _pB, _pC, [uint256(uint160(msg.sender)), _ansNonce, _ansHash]), "Invalid proof!"
+            verifier.verifyProof(_pA, _pB, _pC, [uint256(uint160(msg.sender)), _ansHash]), "Invalid proof!"
         );
-        consumedNonces[_ansNonce] = true;
         playerProgress[msg.sender] += 1;
         uint256 score = 1 ether >> levelCorrects[level];
         playerScore[msg.sender] += score;

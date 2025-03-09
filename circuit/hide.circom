@@ -5,13 +5,11 @@ include "circomlib/circuits/poseidon.circom";
 template Hide() {
     signal input _msgSender;
     signal input answer;
-    signal input nonce;
     signal output hash;
     
-    component hasher = Poseidon(2);
+    component hasher = Poseidon(1);
     hasher.inputs[0] <== answer;
-    hasher.inputs[1] <== nonce;
     hash <== hasher.out;
 }
 
-component main { public [ _msgSender, nonce ] } = Hide();
+component main { public [ _msgSender ] } = Hide();
