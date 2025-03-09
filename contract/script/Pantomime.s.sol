@@ -12,7 +12,7 @@ contract PantomimeScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        pantomime = new Pantomime(address(this));
+        pantomime = new Pantomime();
 
         vm.stopBroadcast();
     }

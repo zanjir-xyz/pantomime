@@ -8,7 +8,7 @@ import "./Verifier.sol";
 contract Pantomime is Ownable {
     Groth16Verifier verifier;
 
-    constructor(address _owner) Ownable(_owner) {
+    constructor() Ownable(msg.sender) {
         verifier = new Groth16Verifier();
     }
 

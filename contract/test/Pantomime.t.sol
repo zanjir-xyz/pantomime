@@ -8,6 +8,6 @@ contract PantomimeTest is Test {
     Pantomime public pantomime;
 
     function setUp() public {
-        pantomime = new Pantomime(address(this));
+        pantomime = new Pantomime();
     }
 }
