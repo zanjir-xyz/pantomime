@@ -2,20 +2,32 @@ import { ethers } from "ethers"
 import * as snarkjs from "snarkjs"
 
 // Contract address
-export const CONTRACT_ADDRESS = "0xCd36bFD6f5c9685A5b1DD953E8279eeC7d41e1E1"
+export const CONTRACT_ADDRESS = "0x141e94d9888F9399891f070aFc8eE76eA08B6DbB"
 
 // ABI for the game contract
 export const CONTRACT_ABI = [
   "function signup() external payable",
-  "function submit(uint256 _ansHash, uint256 _ansNonce, uint256[2] calldata _pA, uint256[2][2] calldata _pB, uint256[2] calldata _pC) external",
+  "function submit(uint256 _ansHash, uint256[2] calldata _pA, uint256[2][2] calldata _pB, uint256[2] calldata _pC) external",
   "function playerProgress(address player) external view returns (uint256)",
   "function isPlayer(address player) external view returns (bool)",
   "function playerScore(address player) external view returns (uint256)",
 ]
 
+// Get base path for assets
+export function getBasePath() {
+  // When running in the browser
+  if (typeof window !== "undefined") {
+    // Check if we're on GitHub Pages
+    if (window.location.hostname === "zanjir-xyz.github.io") {
+      return "/apps/apps/pantomime"
+    }
+  }
+  return ""
+}
+
 // Path to the circuit files
-const WASM_FILE_URL = "/hide_circuit.wasm"
-const ZKEY_FILE_URL = "/hide_circuit_final.zkey"
+const WASM_FILE_URL = `${getBasePath()}/hide.wasm`
+const ZKEY_FILE_URL = `${getBasePath()}/hide_0001.zkey`
 
 // Get contract instance
 export async function getContract() {
@@ -28,28 +40,13 @@ export async function getContract() {
   return new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer)
 }
 
-// Generate a random nonce
-function generateNonce(): bigint {
-  // Generate a random 32-byte value
-  const randomBytes = new Uint8Array(32)
-  crypto.getRandomValues(randomBytes)
-  return ethers.toBigInt(ethers.hexlify(randomBytes))
-}
-
 // Generate proof using snarkjs
-export async function generateProof(answer: string, level: number, account: string) {
+export async function generateProof(answer: BigInt, account: string) {
   try {
-    // Convert answer to a field element (using keccak hash)
-    const answerHash = ethers.toBigInt(ethers.keccak256(ethers.toUtf8Bytes(answer)))
-
-    // Generate a random nonce
-    const nonce = generateNonce()
-
     // Prepare inputs for the circuit
     const input = {
       _msgSender: BigInt(account), // Convert address to BigInt
-      answer: answerHash,
-      nonce: nonce,
+      answer: answer,
     }
 
     // Generate the proof using snarkjs
@@ -58,15 +55,12 @@ export async function generateProof(answer: string, level: number, account: stri
     // Format the proof for the contract
     const proofFormatted = {
       answerHash: publicSignals[0], // The hash output from the circuit
-      answerNonce: nonce.toString(),
       pA: [proof.pi_a[0], proof.pi_a[1]],
       pB: [
         [proof.pi_b[0][1], proof.pi_b[0][0]], // Note: pB is reversed in snarkjs output
         [proof.pi_b[1][1], proof.pi_b[1][0]],
       ],
       pC: [proof.pi_c[0], proof.pi_c[1]],
-      // For UI verification, we still need to check if the answer is correct
-      address: ethers.computeAddress(ethers.keccak256(ethers.toUtf8Bytes(answer)).substring(2)),
     }
 
     return proofFormatted

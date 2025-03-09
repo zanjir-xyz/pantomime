@@ -61,7 +61,7 @@ contract Pantomime is Ownable {
         uint256 level = playerProgress[msg.sender];
         require(levelSolution[level][_ansHash], "Incorrect answer!");
         require(
-            verifier.verifyProof(_pA, _pB, _pC, [uint256(uint160(msg.sender)), _ansHash]), "Invalid proof!"
+            verifier.verifyProof(_pA, _pB, _pC, [_ansHash, uint256(uint160(msg.sender))]), "Invalid proof!"
         );
         playerProgress[msg.sender] += 1;
         uint256 score = 1 ether >> levelCorrects[level];

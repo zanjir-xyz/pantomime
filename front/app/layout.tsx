@@ -14,7 +14,7 @@ const vazirmatn = Vazirmatn({
 
 export const metadata: Metadata = {
   title: "پانتومیم",
-  description: "بازی حدس زدن با وب۳",
+  description: "بازی حدس کلمه بر بستر زنجیر",
     generator: 'v0.dev'
 }
 

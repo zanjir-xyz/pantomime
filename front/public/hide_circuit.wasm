@@ -1,4 +1,0 @@
-// This is a placeholder. In a real application, you would need to compile the circom circuit
-// and place the resulting .wasm file in the public directory.
-// The actual .wasm file is binary and cannot be represented as text here.
-
