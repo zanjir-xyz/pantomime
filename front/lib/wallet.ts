@@ -21,7 +21,7 @@ export async function hasEnoughBalance(address: string): Promise<boolean> {
 
 // Format ETH balance with 4 decimal places
 export function formatBalance(balance: bigint): string {
-  return ethers.formatEther(balance).substring(0, 6)
+  return ethers.formatEther(balance)
 }
 
 // Get user's ETH balance

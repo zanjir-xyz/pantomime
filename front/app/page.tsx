@@ -290,7 +290,6 @@ export default function Home() {
             <div className="space-y-4 text-center mb-6">
               <p>قبل از شروع بازی باید با پرداخت یک مبلغ اولیه ثبت‌نام کنید!</p>
               <p className="font-bold text-destructive">
-              توجه: این فقط یک بازی آزمایشی در شبکه تستی زنجیر است و وجوه واقعی نیستند!
             </p>
             </div>
           ) : (<div className="space-y-4 text-center mb-6">
@@ -305,9 +304,6 @@ export default function Home() {
               بازی بر اساس سرعت پیدا کردن پاسخ‌ها به کاربران امتیاز می‌دهد. پس از پایان بازی، وجوه جمع‌آوری شده در قرارداد
               به نسبت امتیازات کاربران توزیع می‌شود.
             </p>
-            <p className="font-bold text-destructive">
-              توجه: این فقط یک بازی آزمایشی در شبکه تستی زنجیر است و وجوه واقعی نیستند!
-            </p>
           </div>)}
 
           {walletConnected ? (
@@ -318,7 +314,7 @@ export default function Home() {
                 {!checkingBalance && (
                   <div className="mt-2 pt-2 border-t border-border">
                     <p className="text-sm text-muted-foreground">موجودی شما:</p>
-                    <p className="font-mono" dir="ltr">{formatBalance(userBalance)} ETH</p>
+                    <p className="font-mono" dir="ltr">{formatBalance(userBalance)} USDT</p>
                   </div>
                 )}
               </div>
@@ -335,7 +331,7 @@ export default function Home() {
                   ? "در حال پردازش..."
                   : checkingBalance
                     ? "در حال بررسی موجودی..."
-                    : "ثبت نام (پرداخت ۰.۰۰۱ اتر)"}
+                    : "ثبت نام (پرداخت ۱ تتر)"}
               </Button>
 
               {!hasBalance && !checkingBalance && (
