@@ -2,7 +2,7 @@ import { ethers } from "ethers"
 import * as snarkjs from "snarkjs"
 
 // Contract address
-export const CONTRACT_ADDRESS = "0x141e94d9888F9399891f070aFc8eE76eA08B6DbB"
+export const CONTRACT_ADDRESS = "0xF96B6682BC2D07B361b1eB0F995bAA018C16B22D"
 
 // ABI for the game contract
 export const CONTRACT_ABI = [

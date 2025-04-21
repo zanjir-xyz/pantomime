@@ -2,11 +2,11 @@ import { ethers } from "ethers"
 
 // Zanjir network configuration
 export const ZANJIR_NETWORK = {
-  chainId: "0x2F145",
+  chainId: "0x2F147",
   chainName: "Zanjir Network",
   nativeCurrency: {
-    name: "Ether",
-    symbol: "ETH",
+    name: "USDT",
+    symbol: "USDT",
     decimals: 18,
   },
   rpcUrls: ["https://rpc.zanjir.xyz"],
@@ -22,7 +22,7 @@ export async function isOnZanjirNetwork(): Promise<boolean> {
   try {
     const provider = new ethers.BrowserProvider(window.ethereum)
     const network = await provider.getNetwork()
-    return network.chainId === BigInt(192837)
+    return network.chainId === BigInt(192839)
   } catch (error) {
     console.error("Error checking network:", error)
     return false

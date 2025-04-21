@@ -247,10 +247,10 @@ export default function Home() {
                 <span className="col-span-2 font-mono break-all text-left">https://rpc.zanjir.xyz</span>
 
                 <span className="text-muted-foreground">شناسه شبکه:</span>
-                <span className="col-span-2 font-mono text-left">192837</span>
+                <span className="col-span-2 font-mono text-left">192839</span>
 
                 <span className="text-muted-foreground">نماد ارز:</span>
-                <span className="col-span-2 font-mono text-left">ETH</span>
+                <span className="col-span-2 font-mono text-left">USDT</span>
 
                 <span className="text-muted-foreground">کاوشگر بلاک:</span>
                 <span className="col-span-2 font-mono break-all text-left">https://zanjir.xyz/explorer</span>
